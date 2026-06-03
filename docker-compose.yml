@@ -1,0 +1,65 @@
+services:
+  caddy:
+    image: caddy:latest
+    env_file: caddy.env
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+      - ./caddy-errors:/etc/caddy/errors
+    restart: unless-stopped
+    depends_on:
+      - validator
+    networks:
+      - web
+
+  validator:
+    image: python:3-alpine
+    working_dir: /app
+    command: python server.py
+    volumes:
+      - ./validator:/app
+    networks:
+      - web
+    restart: unless-stopped
+  
+  discord-bot:
+    build: ./linewize-checker
+    container_name: discord-bot
+    working_dir: /app/lw
+    command: node index.js
+    volumes:
+      - ./linewize-checker:/app/lw
+    networks:
+      - web
+    restart: unless-stopped
+
+  bestspark-site:
+    build: .
+    container_name: bestspark-site
+    image: bestspark-site
+    volumes:
+      - /home/www/ports:/app/ports
+      - /home/ubuntu/gitig/website-server-modifications/server.js:/app/server.js
+      - /home/www/BestSpark687090/games/sw.js:/app/BestSpark687090/games/sw.js
+    ports:
+      - "6870:8080"
+    expose:
+      - "8080"
+    networks:
+      - web
+    depends_on:
+      - caddy
+      - validator
+
+networks:
+  web:
+    driver: bridge
+
+volumes:
+  caddy_data:
+  caddy_config:

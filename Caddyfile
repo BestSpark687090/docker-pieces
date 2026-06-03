@@ -1,0 +1,55 @@
+	{
+    auto_https off
+    on_demand_tls {
+        ask http://validator:9000
+    }
+    log {
+        level ERROR
+    }
+    acme_ca https://acme.zerossl.com/v2/DV90
+    acme_eab {
+      key_id {env.ACME_EAB_KEY_ID}
+      mac_key {env.ACME_EAB_MAC_KEY}
+    }
+}
+http://bestspark.org {
+    reverse_proxy bestspark-site:8080 {
+        header_up X-Forwarded-For {remote_host}
+    }
+}
+https://status.bestspark.org {
+  tls {
+    on_demand
+  }
+  reverse_proxy uptime-kuma:3001
+}
+
+http://status.bestspark.org {
+  redir https://status.bestspark.org{uri} 308
+}
+https:// {
+    tls {
+        on_demand
+    }
+    reverse_proxy bestspark-site:8080 {
+        header_up X-Forwarded-For {remote_host}
+    }
+    handle_errors 502 503 {
+	root * /etc/caddy/errors
+	rewrite * /server-down.html
+	file_server
+    }
+
+}
+
+http:// {
+    @fromcloudfront {
+        header X-Origin-Verify cloudfront
+    }
+    handle @fromcloudfront {
+        reverse_proxy bestspark-site:8080
+    }
+    handle {
+        redir https://{host}{uri} 308
+    }
+}

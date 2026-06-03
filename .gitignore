@@ -1,0 +1,12 @@
+# Ignore everything by default
+*
+
+# Allow the infra files
+!.gitignore
+!Caddyfile
+!Dockerfile
+!docker-compose.yml
+!rebuild-docker.sh
+
+# Secrets — never commit
+caddy.env
