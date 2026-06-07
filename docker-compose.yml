@@ -55,6 +55,11 @@ services:
     depends_on:
       - caddy
       - validator
+     healthcheck:
+       test: ["CMD", "curl", "-f", "http://localhost:3000/ping"]
+       interval: 10s
+       timeout: 5s
+       retries: 3
 
 networks:
   web:
