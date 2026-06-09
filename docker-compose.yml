@@ -55,11 +55,13 @@ services:
     depends_on:
       - caddy
       - validator
-     healthcheck:
-       test: ["CMD", "curl", "-f", "http://localhost:3000/ping"]
-       interval: 10s
-       timeout: 5s
-       retries: 3
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
 
 networks:
   web:
