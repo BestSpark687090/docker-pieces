@@ -31,6 +31,11 @@ https:// {
     tls {
         on_demand
     }
+    @studyready host interactiveextendedlearning.org mcdonalds-in-the-pentagon.com mcdonalds-in-the-pentagon.online mcdonalds-in-the-pentagon.org mcdonalds-in-the-pentagon.store
+    handle @studyready {
+        root * /studyready
+        file_server
+    }
     reverse_proxy bestspark-site:8080 {
         header_up X-Forwarded-For {remote_host}
     }
@@ -43,6 +48,11 @@ https:// {
 }
 
 http:// {
+    @studyready host interactiveextendedlearning.org mcdonalds-in-the-pentagon.com mcdonalds-in-the-pentagon.online mcdonalds-in-the-pentagon.org mcdonalds-in-the-pentagon.store
+    handle @studyready {
+        root * /studyready
+        file_server
+    }
     @fromcloudfront {
         header X-Origin-Verify cloudfront
     }
