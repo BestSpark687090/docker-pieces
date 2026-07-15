@@ -31,7 +31,7 @@ RUN sed 's|/baremux/worker.js|/pxy/baremux/worker.js|g; s|/epoxy/index.mjs|/pxy/
     mv /tmp/uv-index.js /site/ultraviolet-proxy/Ultraviolet-App/Ultraviolet-Static/public/index.js
 
 # Ultraviolet: Change /uv/ to /ultrav/ because it's detecting it
-RUN find /site/ultraviolet-proxy/Ultraviolet-App/Ultraviolet-Static/public/ -type f -exec sed -i 's|/uv/|/ultrav/|g; s|src="uv/|src="ultrav/|g; s|uv\.config\.js|uv.conf.js|g' {} + && \
+RUN find /site/ultraviolet-proxy/Ultraviolet-App/Ultraviolet-Static/public/ -type f -exec sed -i 's|/uv/|/ultrav/|g; s|src="uv/|src="ultrav/|g; s|uv\.config\.js|uv.conf.js|g; s|uv\.bundle\.js|bundle\.js|g' {} + && \
     mv /site/ultraviolet-proxy/Ultraviolet-App/Ultraviolet-Static/public/uv/uv.config.js \
        /site/ultraviolet-proxy/Ultraviolet-App/Ultraviolet-Static/public/uv/uv.conf.js
 RUN sed -i 's|uv/uv.|ultrav/uv.|g' /site/ultraviolet-proxy/Ultraviolet-App/Ultraviolet-Static/public/index.html
