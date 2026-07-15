@@ -12,6 +12,24 @@
       mac_key {env.ACME_EAB_MAC_KEY}
     }
 }
+mail.bestspark.org {
+    tls {
+        on_demand
+    }
+    respond "" 200
+}
+mx1.bestspark.org {
+    tls {
+        on_demand
+    }
+    respond "" 200
+}
+mta-sts.bestspark.org, autoconfig.bestspark.org {
+    tls {
+        on_demand
+    }
+    reverse_proxy 172.20.0.1:81
+}
 http://bestspark.org {
     reverse_proxy bestspark-site:8080 {
         header_up X-Forwarded-For {remote_host}
@@ -26,6 +44,23 @@ https://status.bestspark.org {
 
 http://status.bestspark.org {
   redir https://status.bestspark.org{uri} 308
+}
+
+https://todo.bestspark.org {
+    tls {
+        on_demand
+    }
+    @needsAuth {
+        not path /icons/* /manifest.json
+    }
+    basic_auth @needsAuth {
+        {env.TODO_USER} {env.TODO_PASSWORD_HASH}
+    }
+    reverse_proxy todo:3000
+}
+
+http://todo.bestspark.org {
+    redir https://todo.bestspark.org{uri} 308
 }
 https:// {
     tls {

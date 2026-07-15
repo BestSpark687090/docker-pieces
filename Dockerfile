@@ -36,11 +36,11 @@ RUN find /site/ultraviolet-proxy/Ultraviolet-App/Ultraviolet-Static/public/ -typ
        /site/ultraviolet-proxy/Ultraviolet-App/Ultraviolet-Static/public/uv/uv.conf.js
 RUN sed -i 's|uv/uv.|ultrav/uv.|g' /site/ultraviolet-proxy/Ultraviolet-App/Ultraviolet-Static/public/index.html
 # Fix paths on Scramjet
-RUN sed -i 's|/~/sj/|/sjp/~/sj/|g; s|/scramjet/scramjet.js|/sjp/scramjet/scramjet.js|g; s|/controller/controller.inject.js|/sjp/controller/controller.inject.js|g; s|/scramjet/scramjet.wasm|/sjp/scramjet/scramjet.wasm|g; s|/libcurl/index.mjs|/sjp/libcurl/index.mjs|g; s|/dark-inject.js|/sjp/dark-inject.js|g' \
+RUN sed -i 's|/~/sj/|/sjp/~/sj/|g; s|/scramjet/scramjet.js|/sjp/sj/sj.js|g; s|/controller/controller.inject.js|/sjp/controller/controller.inject.js|g; s|/scramjet/scramjet.wasm|/sjp/sj/sj.wasm|g; s|/libcurl/index.mjs|/sjp/libcurl/index.mjs|g; s|/dark-inject.js|/sjp/dark-inject.js|g' \
         /site/scramjet-proxy/public/index.js
 RUN sed -i 's|/controller/controller.sw.js|/sjp/controller/controller.sw.js|g; s|/config.js|/sjp/config.js|g' \
         /site/scramjet-proxy/public/sw.js
-RUN sed -i 's|/scramjet/scramjet.js|/sjp/scramjet/scramjet.js|g; s|/controller/controller.api.js|/sjp/controller/controller.api.js|g; s|/scramjet-utils/scramjet-utils.js|/sjp/scramjet-utils/scramjet-utils.js|g' \
+RUN sed -i 's|/scramjet/scramjet.js|/sjp/sj/sj.js|g; s|/controller/controller.api.js|/sjp/controller/controller.api.js|g; s|/scramjet-utils/scramjet-utils.js|/sjp/sju/sju.js|g' \
         /site/scramjet-proxy/public/index.html
 
 # Grab main server through modifications

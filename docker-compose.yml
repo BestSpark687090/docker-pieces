@@ -64,6 +64,21 @@ services:
       retries: 3
       start_period: 15s
 
+  todo:
+    build: ./todo
+    container_name: todo-app
+    volumes:
+      - ./todo/data:/app/data
+    networks:
+      - web
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
 networks:
   web:
     driver: bridge
