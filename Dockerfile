@@ -56,7 +56,7 @@ RUN sed -i 's|/scramjet/scramjet.js|/sjp/sj/sj.js|g; s|/controller/controller.ap
 RUN cp /site/website-server-modifications/server.js /site/server.js
 RUN cp /site/website-server-modifications/package.json /site/package.json
 RUN if [ -n "${notVPS}" ]; then \
-    mv /site/bestspark-web-ports/ /site/ports/ \
+    mv /site/bestspark-web-ports/ /site/ports/; \
 fi
 # -------- Stage 2: run Node.js server --------
 FROM node:20-alpine
