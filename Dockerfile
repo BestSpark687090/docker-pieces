@@ -55,7 +55,7 @@ RUN sed -i 's|/scramjet/scramjet.js|/sjp/sj/sj.js|g; s|/controller/controller.ap
 # Grab main server through modifications
 RUN cp /site/website-server-modifications/server.js /site/server.js
 RUN cp /site/website-server-modifications/package.json /site/package.json
-RUN if [-z "${isDocker}"] then; \
+RUN if [-z "${isDocker}"]; then \
     mv /site/bestspark-web-ports/ /site/ports/ \
 fi
 # -------- Stage 2: run Node.js server --------
