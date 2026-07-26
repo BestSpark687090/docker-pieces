@@ -1,14 +1,23 @@
 # -------- Stage 1: clone the repo --------
 FROM alpine:latest AS fetch
 
-RUN apk add --no-cache git
+RUN apk add --no-cache git git-lfs
 
 WORKDIR /site
-ARG CACHEBUST
+# ARG CACHEBUST
+ARG notVPS
+
+# 
 RUN git clone https://github.com/BestSpark687090/BestSpark687090.git
 RUN git clone https://github.com/BestSpark687090/ultraviolet-proxy.git
 RUN git clone https://github.com/BestSpark687090/scramjet-proxy.git
 RUN git clone https://github.com/BestSpark687090/website-server-modifications.git
+RUN if [ -z "${notVPS}" ]; then \
+    git clone https://github.com/BestSpark687090/bestspark-web-ports.git && \
+    cd bestspark-web-ports && \
+    git lfs fetch --all && git lfs checkout; \
+fi
+
 
 
 # Apply server modifications 
@@ -46,6 +55,9 @@ RUN sed -i 's|/scramjet/scramjet.js|/sjp/sj/sj.js|g; s|/controller/controller.ap
 # Grab main server through modifications
 RUN cp /site/website-server-modifications/server.js /site/server.js
 RUN cp /site/website-server-modifications/package.json /site/package.json
+RUN if [-z "${isDocker}"] then; \
+    mv /site/bestspark-web-ports/ /site/ports/ \
+fi
 # -------- Stage 2: run Node.js server --------
 FROM node:20-alpine
 
