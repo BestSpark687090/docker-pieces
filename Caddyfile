@@ -66,6 +66,19 @@ https:// {
     tls {
         on_demand
     }
+    @wildcard_ip_dns_junk header_regexp Host (?i)(^|\.)(local-ip\.co|local-ip\.sh|nip\.io|sslip\.io|traefik\.me)$
+    log_skip @wildcard_ip_dns_junk
+    log {
+        output file /var/log/caddy/access.log
+        format filter {
+            wrap console
+            fields {
+                request>headers delete
+                request>tls delete
+                resp_headers delete
+            }
+        }
+    }
     @studyready host interactiveextendedlearning.org mcdonalds-in-the-pentagon.com mcdonalds-in-the-pentagon.online mcdonalds-in-the-pentagon.org mcdonalds-in-the-pentagon.store
     handle @studyready {
         root * /studyready
@@ -83,6 +96,19 @@ https:// {
 }
 
 http:// {
+    @wildcard_ip_dns_junk header_regexp Host (?i)(^|\.)(local-ip\.co|local-ip\.sh|nip\.io|sslip\.io|traefik\.me)$
+    log_skip @wildcard_ip_dns_junk
+    log {
+        output file /var/log/caddy/access.log
+        format filter {
+            wrap console
+            fields {
+                request>headers delete
+                request>tls delete
+                resp_headers delete
+            }
+        }
+    }
     @studyready host interactiveextendedlearning.org mcdonalds-in-the-pentagon.com mcdonalds-in-the-pentagon.online mcdonalds-in-the-pentagon.org mcdonalds-in-the-pentagon.store
     handle @studyready {
         root * /studyready

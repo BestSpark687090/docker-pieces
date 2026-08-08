@@ -12,6 +12,7 @@ services:
       - caddy_config:/config
       - ./caddy-errors:/etc/caddy/errors
       - /home/www/studyready:/studyready
+      - ./caddy-logs:/var/log/caddy
     restart: unless-stopped
     depends_on:
       - validator
