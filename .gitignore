@@ -7,6 +7,7 @@
 !Dockerfile
 !docker-compose.yml
 !rebuild-docker.sh
-
+!sync-wildcard-domains.py
+!wildcard-dns-domains.txt
 # Secrets — never commit
 caddy.env

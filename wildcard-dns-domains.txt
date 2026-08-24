@@ -1,0 +1,34 @@
+# Single source of truth for wildcard "IP-in-hostname" DNS services that let
+# anyone mint infinite subdomains resolving to this server -- scanners abuse
+# them for wildcard-vhost probing, and they'd otherwise sail through the
+# validator's normal resolve-based cert check too.
+#
+# To add/remove a domain: edit this file, then run:
+#   sudo python3 /home/www/sync-wildcard-domains.py
+# That regenerates the matching blocks in:
+#   - Caddyfile               (the wildcard_dns_ban_log snippet -- logging/banning)
+#   - validator/server.py     (WILDCARD_IP_DNS_SUFFIXES -- blocks cert issuance)
+#   - validator/test_domains.py
+#   - anti-scanner-kit/Caddyfile.snippet (portable installer template)
+# and reloads Caddy + restarts the validator container.
+#
+# One entry per line. A trailing "*" means "this suffix plus any subdomain
+# prefix" and becomes a regex glob in the Caddyfile (used for glueops-testing,
+# whose scanner subdomains don't share one fixed base domain).
+local-ip.co
+local-ip.sh
+nip.io
+sslip.io
+traefik.me
+v6.army
+v6.rocks
+v6.navy
+dns.army
+plesk.page
+a-i.st
+a-i.sh
+backname.io
+xip.lhjmmc.cn
+glueops-testing*
+nar0.com
+toip.io
