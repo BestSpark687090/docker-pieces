@@ -9,5 +9,7 @@
 !rebuild-docker.sh
 !sync-wildcard-domains.py
 !wildcard-dns-domains.txt
+!ban-scanner-subnets.py
+
 # Secrets — never commit
 caddy.env
