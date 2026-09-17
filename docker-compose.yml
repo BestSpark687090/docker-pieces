@@ -50,6 +50,7 @@ services:
       - /home/www/ports:/app/ports
       - /home/ubuntu/gitig/website-server-modifications/server.js:/app/server.js
       - /home/www/BestSpark687090/games/sw.js:/app/BestSpark687090/games/sw.js
+      - /home/www/BestSpark687090/index.html:/app/BestSpark687090/index.html
     ports:
       - "6870:8080"
     expose:
